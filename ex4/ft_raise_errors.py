@@ -17,16 +17,22 @@ def check_plant_health(plant_name, water_level, sunlight_hours):
 
 
 def test_plant_checks():
+    print("=== Garden Plant Health Checker ===")
     tests = [
-            ("sunflower", 5, 6),
-            ("", 5, 6),
-            ("sunflower", 0, 6),
-            ("sunflower", 5, 14)
+            ("good values", ("sunflower", 5, 6)),
+            ("empty plant name", ("", 5, 6)),
+            ("bad water level", ("sunflower", 15, 6)),
+            ("bad sunlight hours", ("sunflower", 5, 0))
     ]
-    for plant_name, water_level, sunlight_hours in tests:
+    for description, (plant_name, water_level, sunlight_hours) in tests:
         try:
+            print(f"\nTesting {description}...")
             result = check_plant_health(plant_name,
                                         water_level, sunlight_hours)
             print(result)
         except ValueError as error:
             print("Error:", error)
+    print("\nAll error raising tests completed!")
+
+
+test_plant_checks()
