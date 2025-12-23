@@ -1,4 +1,11 @@
+"""
+Temperature validation pipeline for plants.
+Checks if a temperature string is valid and demonstrates error handling.
+"""
+
+
 def check_temperature(temp_str):
+    """Validate a temperature string for plants (0-40°C)."""
     try:
         temp = int(temp_str)
     except ValueError:
@@ -13,6 +20,7 @@ def check_temperature(temp_str):
 
 
 def test_temperature_input():
+    """Test check_temperature with valid, invalid, and extreme inputs."""
     print("=== Garden Temperature Checker ===")
     temps = ["25", "abc", "100", "-50"]
     for temp in temps:
