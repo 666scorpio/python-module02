@@ -39,7 +39,16 @@ class GardenManager:
     def fill_tank(self, n):
         self.water_tank += n
 
+    def set_tank(self, n):
+        self.water_tank = n
+
     def watering_plants(self):
+        try:
+            if self.water_tank <= 0:
+                raise WaterError("Not enough water in tank")
+        except GardenError as error:
+            print("Caught GardenError:", error)
+            return None
         print("Opening watering system")
         print("Watering plants...")
         try:
@@ -52,7 +61,6 @@ class GardenManager:
                     raise WaterError("Not enough water in tank")
         except GardenError as error:
             print("Caught GardenError:", error)
-            print("System recovered and continuing...")
         finally:
             print("Closing watering system (cleanup)")
 
@@ -78,18 +86,23 @@ class GardenManager:
         print(f"{plant.name} healthy (water: {plant.water_level}, sun: {plant.sunlight_hours})")
 
 
-print("=== Garden Management System ===")
+print("=== Garden Management System ===\n")
 print("Adding plants to garden...")
-
 garden = GardenManager()
-
 garden.add_plant("tomato", 5, 8)
 garden.add_plant("lettuce", 15, 8)
+garden.add_plant("", 15, 8)
 garden.fill_tank(2)
+print("")
 garden.watering_plants()
+print("\nChecking plant health...")
 try:
     garden.check_plant_health(garden.plants["tomato"])
     garden.check_plant_health(garden.plants["lettuce"])
-    
 except GardenError as error:
     print("Error checking lettuce:", error)
+print("")
+print("Testing error recovery...")
+garden.watering_plants()
+print("System recovered and continuing...")
+print("\nGarden management system test complete!")
